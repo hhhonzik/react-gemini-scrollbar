@@ -8,12 +8,23 @@ export default class GeminiScrollbar extends Component {
     forceGemini: React.PropTypes.bool
   };
 
+  static childContextTypes = {
+    geminiScrollbar: React.PropTypes.object
+  };
+
   getDefaultProps() {
     return {
       autoshow: false,
       forceGemini: false
     };
   }
+
+  getChildContext() {
+    return {
+      geminiScrollbar: {
+        get: () => this.scrollbar
+      }
+    };
   }
 
   /**
