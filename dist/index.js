@@ -51,6 +51,19 @@ var GeminiScrollbar = function (_Component) {
         forceGemini: false
       };
     }
+  }, {
+    key: 'getChildContext',
+    value: function getChildContext() {
+      var _this2 = this;
+
+      return {
+        geminiScrollbar: {
+          get: function get() {
+            return _this2.scrollbar;
+          }
+        }
+      };
+    }
 
     /**
      * Holds the reference to the GeminiScrollbar instance.
@@ -60,7 +73,6 @@ var GeminiScrollbar = function (_Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      console.log(this.refs.container);
       this.scrollbar = new _geminiScrollbar2.default({
         element: this.refs.container,
         autoshow: this.props.autoshow,
@@ -126,5 +138,8 @@ var GeminiScrollbar = function (_Component) {
 GeminiScrollbar.propTypes = {
   autoshow: _react2.default.PropTypes.bool,
   forceGemini: _react2.default.PropTypes.bool
+};
+GeminiScrollbar.childContextTypes = {
+  geminiScrollbar: _react2.default.PropTypes.object
 };
 exports.default = GeminiScrollbar;
