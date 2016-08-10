@@ -7,13 +7,15 @@ module.exports = React.createClass({
 
     propTypes: {
         autoshow: React.PropTypes.bool,
-        forceGemini: React.PropTypes.bool
+        forceGemini: React.PropTypes.bool,
+        onInit: React.PropTypes.func,
     },
 
     getDefaultProps() {
         return {
             autoshow: false,
-            forceGemini: false
+            forceGemini: false,
+            onInit: null
         }
     },
 
@@ -30,6 +32,10 @@ module.exports = React.createClass({
             forceGemini: this.props.forceGemini,
             createElements: false
         }).create();
+        if (typeof this.props.onInit === 'function') {
+            this.props.onInit(this.scrollbar);
+        }
+
     },
 
     componentDidUpdate() {
@@ -44,7 +50,7 @@ module.exports = React.createClass({
     },
 
     render() {
-        var {className, children, autoshow, forceGemini, ...other} = this.props,
+        var {className, children, autoshow, forceGemini, onInit, ...other} = this.props,
             classes = '';
 
         if (className) {
