@@ -1,68 +1,75 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var GeminiScrollbar = require('gemini-scrollbar');
 
-module.exports = React.createClass({
-    displayName: 'GeminiScrollbar',
+import React, { Component } from 'react';
+import Gemini from 'gemini-scrollbar';
 
-    propTypes: {
-        autoshow: React.PropTypes.bool,
-        forceGemini: React.PropTypes.bool
-    },
+export default class GeminiScrollbar extends Component {
+  static propTypes = {
+    autoshow: React.PropTypes.bool,
+    forceGemini: React.PropTypes.bool
+  };
 
-    getDefaultProps() {
-        return {
-            autoshow: false,
-            forceGemini: false
-        }
-    },
-
-    /**
-     * Holds the reference to the GeminiScrollbar instance.
-     * @property scrollbar <public> [Object]
-     */
-    scrollbar: null,
-
-    componentDidMount() {
-        this.scrollbar = new GeminiScrollbar({
-            element: ReactDOM.findDOMNode(this),
-            autoshow: this.props.autoshow,
-            forceGemini: this.props.forceGemini,
-            createElements: false
-        }).create();
-    },
-
-    componentDidUpdate() {
-        this.scrollbar.update();
-    },
-
-    componentWillUnmount() {
-        if (this.scrollbar) {
-            this.scrollbar.destroy();
-        }
-        this.scrollbar = null;
-    },
-
-    render() {
-        var {className, children, autoshow, forceGemini, ...other} = this.props,
-            classes = '';
-
-        if (className) {
-            classes += ' ' + className;
-        }
-
-        return (
-            <div {...other} className={classes}>
-                <div className='gm-scrollbar -vertical'>
-                    <div className='thumb'></div>
-                </div>
-                <div className='gm-scrollbar -horizontal'>
-                    <div className='thumb'></div>
-                </div>
-                <div className='gm-scroll-view' ref='scroll-view'>
-                    {children}
-                </div>
-            </div>
-        );
+  getDefaultProps() {
+    return {
+      autoshow: false,
+      forceGemini: false
     }
-});
+  }
+
+  /**
+   * Holds the reference to the GeminiScrollbar instance.
+   * @property scrollbar <public> [Object]
+   */
+  scrollbar = null;
+
+  componentDidMount() {
+    console.log(this.refs.container);
+    this.scrollbar = new Gemini({
+      element: this.refs.container,
+      autoshow: this.props.autoshow,
+      forceGemini: this.props.forceGemini,
+      createElements: false
+    }).create();
+  }
+
+  componentDidUpdate() {
+    this.scrollbar.update();
+  }
+
+  componentWillUnmount() {
+    if (this.scrollbar) {
+      this.scrollbar.destroy();
+    }
+    this.scrollbar = null;
+  }
+
+  render() {
+    const {
+      className,
+      children,
+      autoshow,
+      forceGemini,
+      ...other
+    } = this.props;
+
+    let classes = '';
+
+    if (className) {
+      classes += ` ${className}`;
+    }
+
+    return (
+      <div className={classes} ref="container" {...other} >
+        <div className="gm-scrollbar -vertical">
+          <div className="thumb"></div>
+        </div>
+        <div className="gm-scrollbar -horizontal">
+          <div className="thumb"></div>
+        </div>
+        <div className="gm-scroll-view" ref="scroll-view">
+          {children}
+        </div>
+      </div>
+    );
+  }
+}
+
