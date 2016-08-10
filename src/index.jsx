@@ -12,7 +12,8 @@ export default class GeminiScrollbar extends Component {
     return {
       autoshow: false,
       forceGemini: false
-    }
+    };
+  }
   }
 
   /**
@@ -22,7 +23,6 @@ export default class GeminiScrollbar extends Component {
   scrollbar = null;
 
   componentDidMount() {
-    console.log(this.refs.container);
     this.scrollbar = new Gemini({
       element: this.refs.container,
       autoshow: this.props.autoshow,
